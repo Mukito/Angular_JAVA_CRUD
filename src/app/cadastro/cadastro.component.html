@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Cadastro de Contatos</h4>
+    </div>
+
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()" #form="ngForm" class="row g-3">
+        <div class="col-md-4">
+          <input type="text" class="form-control" [(ngModel)]="novoContato.nome" name="nome" placeholder="Nome" required>
+        </div>
+        <div class="col-md-4">
+          <input type="email" class="form-control" [(ngModel)]="novoContato.email" name="email" placeholder="E-mail" required>
+        </div>
+        <div class="col-md-4">
+          <input type="tel" class="form-control" [(ngModel)]="novoContato.telefone" name="telefone" placeholder="Telefone" required>
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-success">
+            {{ editando ? 'Salvar Alterações' : 'Adicionar Contato' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h5>Lista de Contatos</h5>
+    <table class="table table-hover table-bordered mt-3">
+      <thead class="table-light">
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Telefone</th>
+        <th class="text-center">Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contato of contatos | paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
+        <td>{{ contato.nome }}</td>
+        <td>{{ contato.email }}</td>
+        <td>{{ contato.telefone }}</td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-warning me-2" (click)="editarContato(i)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="removerContato(i)">Remover</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+</div>
